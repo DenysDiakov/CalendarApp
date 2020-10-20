@@ -1,0 +1,51 @@
+﻿@model DateTime
+<h1>@ViewBag.Title</h1>
+
+<div>
+    @Html.ActionLink("Return", "Index", "Home")
+</div>
+
+<table>
+    @foreach (var item in ViewBag.Dates)
+    {
+        string time = string.Format("{0}:{1}", item.Hours, item.Minutes);
+        var task = (Note)item;
+        <tr>
+            <td>
+                @Html.DisplayFor(model => time)
+            </td>
+            <td>
+                @Html.DisplayFor(model => task.Task)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", "Home", new { id = task.Id, date = task.CalendarDate })
+            </td>
+        </tr>
+    }
+</table>
+
+<table>
+
+    @using (Html.BeginForm("Add", "Home"))
+    {
+        var data = ViewBag.Title;
+        <tr>
+            <td>
+                @Html.DropDownList("Hours", ViewBag.Hours as SelectList, "Hours")
+                :
+            </td>
+            <td>
+                @Html.DropDownList("Minutes", ViewBag.Minutes as SelectList, "Minutes")
+            </td>
+            <td>
+                <input type="text" name="Task" width="15" />
+            </td>
+            <td>
+                <input type="hidden" name="CalendarDate" value="@Model.Date.ToShortDateString()" size="7" />
+            </td>
+            <td>
+                <input type="submit" value="Add" />
+            </td>
+        </tr>
+    }
+</table>

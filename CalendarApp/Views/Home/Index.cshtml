@@ -1,0 +1,49 @@
+﻿@model List<List<Calendar>>
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+<div style="text-align:left">
+    @Html.ActionLink("Prev", "ChangeMonth", "Home", new { number = -1 }, null)
+</div>
+
+<div style="text-align: right">
+    @Html.ActionLink("Next", "ChangeMonth", "Home", new { number = 1 }, null)
+</div>
+
+<table width="600" cellpadding="1" border="1" align="center" style="table-layout: fixed">
+    <thead>
+        <tr>
+            <td colspan="7" align="center">
+                @ViewBag.YearMonth
+            </td>
+        </tr>
+        <tr>
+            <th class="text-center">Mo</th>
+            <th class="text-center">Tu</th>
+            <th class="text-center">We</th>
+            <th class="text-center">Th</th>
+            <th class="text-center">Fr</th>
+            <th class="text-center">Sa</th>
+            <th class="text-center">Su</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var week in Model)
+        {
+            <tr>
+
+                @foreach (var day in week)
+                {
+                    <td align="center">
+                        @Html.ActionLink(day.Date.Day.ToString(), "Get", "Home", new { date = day.Date }, null)
+                        @if (day.TaskCount != 0)
+                        {
+                            <b>(@day.TaskCount)</b>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
